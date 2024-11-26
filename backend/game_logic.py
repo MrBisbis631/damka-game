@@ -29,7 +29,22 @@ def create_room(data, games):
 
 
 def join_room(data, games):
+    try:
+        game_uuid = data["gameUuid"]
+        player_name = data["playerName"]
+        player_image = data.get("playerImage")
+
+        if game_uuid not in games:
+            return {"error": "Game not found."}
+        if games[game_uuid]["player2"] is not None:
+            return {"error": "Game is already full."}
+
+        games[game_uuid]["player2"] = {"id": str(uuid.uuid4()), "name": player_name, "image": player_image}
+        games[game_uuid]["state"] = "player1_turn"
+        return {"gameUuid": game_uuid}
+    except KeyError:
         return {"error": "Missing required fields."}
+
 
 def get_game_state(game_uuid, games):
     if game_uuid not in games:
@@ -42,6 +57,7 @@ def get_game_state(game_uuid, games):
         "player1": game["player1"],
         "player2": game["player2"],
     }
+
 
 def make_move(data, games):
         return {"error": "Invalid request payload."}
