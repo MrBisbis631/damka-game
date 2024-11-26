@@ -9,8 +9,8 @@ Table games {
   uuid varchar(255) [unique]
   state varchar(255) [note: 'enum: ...']
   board json
-  player1Id int [ref: - players.id]
-  player2Id int [ref: - players.id]
+  player1Id int [ref: > players.id]
+  player2Id int [ref: > players.id]
 }
 
 Table scores {
