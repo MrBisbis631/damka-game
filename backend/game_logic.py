@@ -60,5 +60,29 @@ def get_game_state(game_uuid, games):
 
 
 def make_move(data, games):
+    try:
+        game_uuid = data["gameUuid"]
+        from_pos = data["from"]
+        to_pos = data["to"]
+
+        if game_uuid not in games:
+            return {"error": "Game not found."}
+
+        # Validate and update board logic (simplified here)
+        game = games[game_uuid]
+        board = game["board"]
+
+        # Check if it's a valid move (dummy logic for example)
+        if board[from_pos[0]][from_pos[1]] not in ["w", "b"]:
+            return {"error": "Invalid move. No piece at 'from' position."}
+
+        # Update board (for simplicity)
+        board[to_pos[0]][to_pos[1]] = board[from_pos[0]][from_pos[1]]
+        board[from_pos[0]][from_pos[1]] = "e"
+
+        # Update turn state
+        game["state"] = "player2_turn" if game["state"] == "player1_turn" else "player1_turn"
+        return {"message": "Move successful."}
+    except KeyError:
         return {"error": "Invalid request payload."}
 
