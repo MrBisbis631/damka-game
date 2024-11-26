@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-import uuid
 from game_logic import create_room, join_room, get_game_state, make_move
 
 app = Flask(__name__)
