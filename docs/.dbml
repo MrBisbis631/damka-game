@@ -1,0 +1,20 @@
+Table players {
+  id int [pk, increment]
+  name varchar(255)
+  photoUrl varchar(255)
+}
+
+Table games {
+  id int [pk, increment]
+  uuid varchar(255) [unique]
+  state varchar(255) [note: 'enum: ...']
+  board json
+  player1Id int [ref: - players.id]
+  player2Id int [ref: - players.id]
+}
+
+Table scores {
+  id int [pk, increment]
+  gameId int [ref: - games.id]
+  winnerId int [ref: - players.id]
+}
