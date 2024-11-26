@@ -6,7 +6,6 @@ def create_room(data, games):
         player_image = data.get("playerImage")
         game_uuid = str(uuid.uuid4())
         
-        # Define the starting board configuration
         starting_board = [
             ["w", "e", "w", "e", "w", "e", "w", "e"],
             ["e", "w", "e", "w", "e", "w", "e", "w"],
@@ -30,9 +29,20 @@ def create_room(data, games):
 
 
 def join_room(data, games):
+        return {"error": "Missing required fields."}
 
 def get_game_state(game_uuid, games):
+    if game_uuid not in games:
+        return {"error": "Game not found."}
+    game = games[game_uuid]
+    return {
+        "gameUuid": game_uuid,
+        "state": game["state"],
+        "board": game["board"],
+        "player1": game["player1"],
+        "player2": game["player2"],
+    }
 
 def make_move(data, games):
-
+        return {"error": "Invalid request payload."}
 
